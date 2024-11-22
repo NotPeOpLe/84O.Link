@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
 
   if (type === "url" && typeof input === "string") {
     await db.insert(tables.links).values({ key, type, target: input }).run()
+    return getRequestURL(event) + key
   }
 
   if (type === "file" && input instanceof File && input.size) {
@@ -18,7 +19,9 @@ export default defineEventHandler(async (event) => {
     await hubBlob().put(key, input, {
       customMetadata: { filename: input.name },
     })
-  }
 
-  return getRequestURL(event) + key
+    await db.insert(tables.links).values({ key, type, target: key }).run()
+
+    return getRequestURL(event) + key
+  }
 })

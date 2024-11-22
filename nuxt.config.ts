@@ -1,7 +1,10 @@
+import Components from "unplugin-vue-components/vite"
+import { NaiveUiResolver } from "unplugin-vue-components/resolvers"
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // https://nuxt.com/modules
-  modules: ["@nuxthub/core", "@nuxt/eslint"],
+  modules: ["@nuxthub/core", "@nuxt/eslint", "nuxtjs-naive-ui", "@nuxtjs/tailwindcss", "@nuxt/icon"],
 
   // https://devtools.nuxt.com
   devtools: { enabled: true },
@@ -27,6 +30,14 @@ export default defineNuxtConfig({
   hub: {
     database: true,
     blob: true,
+  },
+
+  vite: {
+    plugins: [
+      Components({
+        resolvers: [NaiveUiResolver()],
+      }),
+    ],
   },
 
   // https://eslint.nuxt.com
