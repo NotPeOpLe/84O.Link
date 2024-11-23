@@ -52,59 +52,56 @@ function download() {
 
 <template>
   <ClientOnly>
-    <NFlex align="center" justify="center" class="h-screen" vertical>
-      <!-- <pre class="">{{ data }}</pre> -->
-      <NCard
-        v-if="data?.type === 'file'"
-        content-class="flex items-center justify-center"
-      >
-        <div class="max-w-2xl">
-          <!-- images -->
-          <NImage
-            v-if="data.file?.contentType?.startsWith('image')"
-            :src="src"
-            width="320px"
-            object-fit="cover"
-          />
+    <NCard
+      v-if="data?.type === 'file'"
+      content-class="flex items-center justify-center"
+    >
+      <div class="max-w-2xl">
+        <!-- images -->
+        <NImage
+          v-if="data.file?.contentType?.startsWith('image')"
+          :src="src"
+          width="320px"
+          object-fit="cover"
+        />
 
-          <!-- videos -->
-          <video
-            v-else-if="data.file?.contentType?.startsWith('video')"
-            :src="src"
-            class="min-w-[320px] max-w-full"
-            controls
-          />
+        <!-- videos -->
+        <video
+          v-else-if="data.file?.contentType?.startsWith('video')"
+          :src="src"
+          class="min-w-[320px] max-w-full"
+          controls
+        />
 
-          <!-- audios -->
-          <audio
-            v-else-if="data.file?.contentType?.startsWith('audio')"
-            :src="src"
-            controls
-          />
+        <!-- audios -->
+        <audio
+          v-else-if="data.file?.contentType?.startsWith('audio')"
+          :src="src"
+          controls
+        />
 
-          <!-- unknown type -->
-          <NFlex v-else align="center" justify="center" vertical>
-            <NIcon size="64">
-              <Icon name="tabler:file" />
-            </NIcon>
-            <NText class="text-center">無法預覽此檔案</NText>
+        <!-- unknown type -->
+        <NFlex v-else align="center" justify="center" vertical>
+          <NIcon size="64">
+            <Icon name="tabler:file" />
+          </NIcon>
+          <NText class="text-center">無法預覽此檔案</NText>
+        </NFlex>
+      </div>
+      <template #footer>
+        <NFlex align="center" justify="center" class="text-center" vertical>
+          <NTag>{{ data.file?.customMetadata.filename }}</NTag>
+          <span>Size: {{ size }}</span>
+          <NFlex align="center" justify="center">
+            <NButton type="primary" size="small" @click="download">
+              <template #icon>
+                <Icon name="tabler:arrow-bar-to-down" />
+              </template>
+              下載
+            </NButton>
           </NFlex>
-        </div>
-        <template #footer>
-          <NFlex align="center" justify="center" class="text-center" vertical>
-            <NTag>{{ data.file?.customMetadata.filename }}</NTag>
-            <span>Size: {{ size }}</span>
-            <NFlex align="center" justify="center">
-              <NButton type="primary" size="small" @click="download">
-                <template #icon>
-                  <Icon name="tabler:arrow-bar-to-down" />
-                </template>
-                下載
-              </NButton>
-            </NFlex>
-          </NFlex>
-        </template>
-      </NCard>
-    </NFlex>
+        </NFlex>
+      </template>
+    </NCard>
   </ClientOnly>
 </template>

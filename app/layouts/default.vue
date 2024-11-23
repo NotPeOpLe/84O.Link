@@ -1,5 +1,10 @@
 <template>
-  <div class="max-w-3xl mx-auto">
+  <NFlex
+    align="center"
+    justify="center"
+    class="h-screen max-w-3xl mx-auto"
+    vertical
+  >
     <slot />
-  </div>
+  </NFlex>
 </template>
