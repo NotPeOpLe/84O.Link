@@ -14,6 +14,11 @@ if (data.value && data.value.type === "url") {
   await navigateTo(data.value?.target, { external: true })
 }
 
+const src = computed(
+  () =>
+    `/files/${data.value!.target}?filename=${data.value!.file!.customMetadata.filename}`
+)
+
 function isBot() {
   const userAgent = useRequestHeader("User-Agent")
   if (!userAgent) return false
@@ -57,7 +62,7 @@ function download() {
           <!-- images -->
           <NImage
             v-if="data.file?.contentType?.startsWith('image')"
-            :src="'/files/' + data.target"
+            :src="src"
             width="320px"
             object-fit="cover"
           />
@@ -65,7 +70,7 @@ function download() {
           <!-- videos -->
           <video
             v-else-if="data.file?.contentType?.startsWith('video')"
-            :src="'/files/' + data.target"
+            :src="src"
             class="min-w-[320px] max-w-full"
             controls
           />
@@ -73,7 +78,7 @@ function download() {
           <!-- audios -->
           <audio
             v-else-if="data.file?.contentType?.startsWith('audio')"
-            :src="'/files/' + data.target"
+            :src="src"
             controls
           />
 
