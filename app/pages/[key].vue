@@ -57,30 +57,32 @@ function download() {
       content-class="flex items-center justify-center"
     >
       <div class="max-w-2xl">
-        <!-- images -->
-        <NImage
-          v-if="data.file?.contentType?.startsWith('image')"
-          :src="src"
-          width="320px"
-          object-fit="cover"
-        />
+        <div v-if="!data.file?.customMetadata.disablePreview">
+          <!-- images -->
+          <NImage
+            v-if="data.file?.contentType?.startsWith('image')"
+            :src="src"
+            width="320px"
+            object-fit="cover"
+          />
 
-        <!-- videos -->
-        <video
-          v-else-if="data.file?.contentType?.startsWith('video')"
-          :src="src"
-          class="min-w-[320px] max-w-full"
-          controls
-        />
+          <!-- videos -->
+          <video
+            v-else-if="data.file?.contentType?.startsWith('video')"
+            :src="src"
+            class="min-w-[320px] max-w-full"
+            controls
+          />
 
-        <!-- audios -->
-        <audio
-          v-else-if="data.file?.contentType?.startsWith('audio')"
-          :src="src"
-          controls
-        />
+          <!-- audios -->
+          <audio
+            v-else-if="data.file?.contentType?.startsWith('audio')"
+            :src="src"
+            controls
+          />
+        </div>
 
-        <!-- unknown type -->
+        <!-- unknown type or no-preview -->
         <NFlex v-else align="center" justify="center" vertical>
           <NIcon size="64">
             <Icon name="tabler:file" />

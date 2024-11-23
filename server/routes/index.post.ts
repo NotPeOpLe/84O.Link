@@ -12,13 +12,19 @@ export default defineEventHandler(async (event) => {
 
   if (type === "file" && input instanceof File && input.size) {
     ensureBlob(input, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       maxSize: "25MB",
       types: [],
     })
 
-    await hubBlob().put(key, input, {
-      customMetadata: { filename: input.name },
-    })
+    const customMetadata: { [x: string]: string } = {}
+    const fileDisablePreview = form.get("file.disablePreview")
+
+    customMetadata.filename = input.name
+    if (fileDisablePreview) customMetadata.disablePreview = "1"
+
+    await hubBlob().put(key, input, { customMetadata })
 
     await db.insert(tables.links).values({ key, type, target: key }).run()
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UploadFileInfo } from "naive-ui"
+import { NCheckbox, type UploadFileInfo } from "naive-ui"
 
 const {
   data: url,
@@ -10,6 +10,9 @@ const {
   async () => {
     if (!file.value?.file) return
     const formData = new FormData()
+    if (disablePreview.value) {
+      formData.set("file.disablePreview", "1")
+    }
     formData.set("type", "file")
     formData.set("input", file.value.file)
     const res = await $fetch<string>("/", { method: "POST", body: formData })
@@ -22,6 +25,7 @@ const {
 )
 
 const file = ref<UploadFileInfo>()
+const disablePreview = ref(false)
 
 function onFilesUpdate(fileList: UploadFileInfo[]) {
   error.value = undefined
@@ -32,11 +36,12 @@ async function onSubmit() {
   if (!file.value?.file) return
   await upload()
   file.value = undefined
+  disablePreview.value = false
 }
 </script>
 
 <template>
-  <NForm :disabled="status === 'pending'">
+  <NForm :disabled="status === 'pending'" class="mb-5">
     <NFormItem>
       <NInputGroup>
         <NUpload
@@ -62,6 +67,7 @@ async function onSubmit() {
         </NButton>
       </NInputGroup>
     </NFormItem>
+    <NCheckbox v-model:checked="disablePreview"> 不顯示預覽 </NCheckbox>
   </NForm>
   <!-- <pre>{{ file }}</pre> -->
 
