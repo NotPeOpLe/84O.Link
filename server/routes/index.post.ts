@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   if (type === "file" && input instanceof File && input.size) {
     ensureBlob(input, {
-      maxSize: "64MB",
+      maxSize: "25MB",
       types: [],
     })
 

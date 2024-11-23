@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   value?: string
+  href?: string
 }>()
 
 function copy() {
@@ -10,14 +11,13 @@ function copy() {
 </script>
 
 <template>
-  <NCard content-class="text-center" :bordered="Boolean(value)">
-    <NFlex align="center" justify="center">
-      <NText>{{ value }}</NText>
-      <NButton v-if="value" text class="text-xl" @click="copy">
-        <n-icon>
-          <Icon name="tabler:copy" />
-        </n-icon>
-      </NButton>
-    </NFlex>
-  </NCard>
+  <NFlex align="center" justify="center">
+    <NA v-if="href" :href="href" target="_blank">{{ value }}</NA>
+    <NText v-else>{{ value }}</NText>
+    <NButton v-if="value" text class="text-xl" @click="copy">
+      <n-icon>
+        <Icon name="tabler:copy" />
+      </n-icon>
+    </NButton>
+  </NFlex>
 </template>

@@ -5,6 +5,7 @@ const {
   data: url,
   execute: upload,
   status,
+  error,
 } = useAsyncData(
   async () => {
     if (!file.value?.file) return
@@ -23,12 +24,14 @@ const {
 const file = ref<UploadFileInfo>()
 
 function onFilesUpdate(fileList: UploadFileInfo[]) {
+  error.value = undefined
   file.value = fileList[0]
 }
 
 async function onSubmit() {
   if (!file.value?.file) return
   await upload()
+  file.value = undefined
 }
 </script>
 
@@ -61,5 +64,11 @@ async function onSubmit() {
     </NFormItem>
   </NForm>
   <!-- <pre>{{ file }}</pre> -->
-  <CopyBox :value="url" />
+
+  <NCard content-class="text-center" :bordered="false">
+    <NText v-if="error" type="error">
+      {{ error?.data?.message || "未知錯誤" }}
+    </NText>
+    <CopyBox :value="url" :href="url" />
+  </NCard>
 </template>

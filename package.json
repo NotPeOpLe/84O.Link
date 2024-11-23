@@ -12,6 +12,9 @@
     "lint": "eslint .",
     "db:g": "drizzle-kit generate"
   },
+  "resolution": {
+    "css-render": "^0.15.14"
+  },
   "dependencies": {
     "@nuxt/eslint": "^0.6.1",
     "@nuxt/icon": "^1.8.2",
@@ -21,6 +24,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.36.3",
+    "highlight.js": "^11.10.0",
     "lucide-vue-next": "^0.460.0",
     "nuxt": "^3.14.0",
     "nuxtjs-naive-ui": "^1.0.2",
@@ -34,6 +38,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@iconify-json/tabler": "^1.2.8",
     "@nuxt/eslint-config": "^0.6.1",
     "@nuxtjs/tailwindcss": "^6.12.2",
     "drizzle-kit": "^0.28.1",

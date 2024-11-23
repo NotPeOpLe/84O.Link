@@ -32,6 +32,9 @@ importers:
       drizzle-orm:
         specifier: ^0.36.3
         version: 0.36.3(@cloudflare/workers-types@4.20241022.0)
+      highlight.js:
+        specifier: ^11.10.0
+        version: 11.10.0
       lucide-vue-next:
         specifier: ^0.460.0
         version: 0.460.0(vue@3.5.12(typescript@5.6.3))
@@ -66,6 +69,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@iconify-json/tabler':
+        specifier: ^1.2.8
+        version: 1.2.8
       '@nuxt/eslint-config':
         specifier: ^0.6.1
         version: 0.6.1(eslint@9.14.0(jiti@2.4.0))(typescript@5.6.3)
@@ -1133,6 +1139,9 @@ packages:
   '@humanwhocodes/retry@0.4.0':
     resolution: {integrity: sha512-xnRgu9DxZbkWak/te3fcytNyp8MTbuiZIaueg2rgEvBuN55n04nwLYLU9TX/VVlusc9L2ZNXi99nUFNkHXtr5g==}
     engines: {node: '>=18.18'}
+
+  '@iconify-json/tabler@1.2.8':
+    resolution: {integrity: sha512-xvi/UKhLiFRnutSo6xuHxvOGmskYEoC2St4WDVsU9WAW1DRG1EkBUk/Zy1TpeSsBKMQfyqtdjjx9Cf4ZezOK2w==}
 
   '@iconify/collections@1.0.486':
     resolution: {integrity: sha512-E/xw5Vku+QD/eHa89W6FYSIf+ljqiBOTSAZ+dg0dCg7Wj65qZoxfp/LJBC6EZV4J2jfPS3PVOFfyxqiK4iYrkg==}
@@ -6105,6 +6114,10 @@ snapshots:
   '@humanwhocodes/retry@0.3.1': {}
 
   '@humanwhocodes/retry@0.4.0': {}
+
+  '@iconify-json/tabler@1.2.8':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/collections@1.0.486':
     dependencies:

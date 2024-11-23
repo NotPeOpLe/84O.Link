@@ -4,6 +4,7 @@ import { type FormRules, type FormInst, NFormItem } from "naive-ui"
 const {
   data: url,
   status,
+  error,
   execute,
 } = useAsyncData(
   () => {
@@ -84,5 +85,10 @@ async function onSubmit() {
       </NInputGroup>
     </NFormItem>
   </NForm>
-  <CopyBox :value="url" />
+  <NCard content-class="text-center" :bordered="false">
+    <NText v-if="error" type="error">
+      {{ error?.data?.message || "未知錯誤" }}
+    </NText>
+    <CopyBox :value="url" :href="url" />
+  </NCard>
 </template>
