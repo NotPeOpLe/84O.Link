@@ -6,8 +6,22 @@ const { data } = await useFetch("/api", {
   query: { key: route.params.key },
 })
 
+if (!data.value) {
+  throw createError({ statusCode: 404 })
+}
+
 if (data.value && data.value.type === "url") {
   await navigateTo(data.value?.target, { external: true })
+}
+
+function isBot() {
+  const userAgent = useRequestHeader("User-Agent")
+  if (!userAgent) return false
+  return userAgent.includes("compatible")
+}
+
+if (import.meta.server && isBot()) {
+  await navigateTo("/files/" + data.value.target, { external: true })
 }
 
 const formatSize = (size: number) => {
