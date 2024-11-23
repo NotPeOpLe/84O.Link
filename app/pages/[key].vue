@@ -25,7 +25,11 @@ function isBot() {
   return userAgent.includes("compatible")
 }
 
-if (import.meta.server && isBot()) {
+if (
+  import.meta.server &&
+  isBot() &&
+  !data.value.file?.customMetadata.disablePreview
+) {
   await navigateTo("/files/" + data.value.target, { external: true })
 }
 
@@ -87,7 +91,7 @@ function download() {
           <NIcon size="64">
             <Icon name="tabler:file" />
           </NIcon>
-          <NText class="text-center">無法預覽此檔案</NText>
+          <NText class="text-center"> 無法預覽此檔案 </NText>
         </NFlex>
       </div>
       <template #footer>
