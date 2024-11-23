@@ -49,7 +49,7 @@ async function onSubmit() {
         >
           <NInput
             :value="file?.name ?? ''"
-            placeholder="點我選擇檔案"
+            placeholder="點我選擇檔案 (最大 25MB)"
             readonly
           />
         </NUpload>
