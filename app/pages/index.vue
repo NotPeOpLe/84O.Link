@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useHead({
+  title: "84O.Link",
+  meta: [
+    {
+      name: "description",
+      content: "普通的短網址服務，也可上傳檔案",
+    },
+  ],
+})
+</script>
 
 <template>
   <ClientOnly>
