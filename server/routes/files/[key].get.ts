@@ -7,7 +7,7 @@ export default eventHandler(async (event) => {
     setResponseHeader(
       event,
       "Content-Disposition",
-      `attachment; filename="${filename}"`
+      `attachment; filename="${encodeURIComponent(filename as string)}"`
     )
   }
 
