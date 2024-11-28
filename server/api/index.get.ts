@@ -1,10 +1,6 @@
-import type { BlobObject } from "@nuxthub/core"
-
 const NOT_FOUND = createError({ statusCode: 404, message: "Not found" })
 
-type ReturnType = Link & { file?: BlobObject }
-
-export default defineEventHandler(async (event): Promise<ReturnType> => {
+export default defineEventHandler(async (event): Promise<LinkObject> => {
   const { key }: { key?: string } = getQuery(event)
   if (!key) throw NOT_FOUND
 

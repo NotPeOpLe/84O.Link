@@ -5,4 +5,5 @@ export const links = sqliteTable("links", {
   key: t.text("key").primaryKey(),
   type: t.text("type", { enum: ["url", "file"] }).notNull(),
   target: t.text("target").notNull(),
+  editKey: t.text("editKey"),
 })
