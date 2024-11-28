@@ -4,6 +4,7 @@ export default defineEventHandler(async (event) => {
   const type = form.get("type")
   const input = form.get("input")
   const key = await generateKey()
+  const editKey = await generateEditKey()
 
   if (type === "url" && typeof input === "string") {
     await db.insert(tables.links).values({ key, type, target: input }).run()
@@ -26,7 +27,15 @@ export default defineEventHandler(async (event) => {
 
     await hubBlob().put(key, input, { customMetadata })
 
-    await db.insert(tables.links).values({ key, type, target: key }).run()
+    await db
+      .insert(tables.links)
+      .values({ key, type, target: key, editKey })
+      .run()
+
+    // setResponseHeader(event, "Edit-Key", editKey)
+    // appendHeader(event, "Edit-Key", editKey)
+    setHeader(event, "Edit-Key", editKey)
+    console.log(getResponseHeaders(event))
 
     return getRequestURL(event) + key
   }
