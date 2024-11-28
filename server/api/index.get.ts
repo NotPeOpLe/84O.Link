@@ -5,7 +5,11 @@ export default defineEventHandler(async (event): Promise<LinkObject> => {
   if (!key) throw NOT_FOUND
 
   const result = await useDrizzle()
-    .select()
+    .select({
+      key: tables.links.key,
+      type: tables.links.type,
+      target: tables.links.target,
+    })
     .from(tables.links)
     .where(eq(tables.links.key, key))
     .get()

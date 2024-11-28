@@ -7,8 +7,20 @@ export default defineEventHandler(async (event) => {
   const editKey = await generateEditKey()
 
   if (type === "url" && typeof input === "string") {
-    await db.insert(tables.links).values({ key, type, target: input }).run()
-    return getRequestURL(event) + key
+    const dbResult = await db
+      .insert(tables.links)
+      .values({ key, type, target: input })
+      .returning({
+        key: tables.links.key,
+        type: tables.links.type,
+        target: tables.links.target,
+        editKey: tables.links.editKey,
+      })
+
+    return {
+      url: getRequestURL(event) + key,
+      data: dbResult[0],
+    }
   }
 
   if (type === "file" && input instanceof File && input.size) {
@@ -25,18 +37,24 @@ export default defineEventHandler(async (event) => {
     customMetadata.filename = input.name
     if (fileDisablePreview) customMetadata.disablePreview = "1"
 
-    await hubBlob().put(key, input, { customMetadata })
+    const file = await hubBlob().put(key, input, { customMetadata })
 
-    await db
+    const dbResult = await db
       .insert(tables.links)
       .values({ key, type, target: key, editKey })
-      .run()
+      .returning({
+        key: tables.links.key,
+        type: tables.links.type,
+        target: tables.links.target,
+        editKey: tables.links.editKey,
+      })
 
-    // setResponseHeader(event, "Edit-Key", editKey)
-    // appendHeader(event, "Edit-Key", editKey)
-    setHeader(event, "Edit-Key", editKey)
-    console.log(getResponseHeaders(event))
-
-    return getRequestURL(event) + key
+    return {
+      url: getRequestURL(event) + key,
+      data: {
+        ...dbResult[0],
+        file,
+      },
+    }
   }
 })

@@ -2,7 +2,7 @@
 import { NCheckbox, type UploadFileInfo } from "naive-ui"
 
 const {
-  data: url,
+  data,
   execute: upload,
   status,
   error,
@@ -75,6 +75,6 @@ async function onSubmit() {
     <NText v-if="error" type="error">
       {{ error?.data?.message || "未知錯誤" }}
     </NText>
-    <CopyBox :value="url" :href="url" />
+    <CopyBox :value="data?.url" :href="data?.url" />
   </NCard>
 </template>

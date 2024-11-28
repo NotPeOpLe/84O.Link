@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { type FormRules, type FormInst, NFormItem } from "naive-ui"
 
-const {
-  data: url,
-  status,
-  error,
-  execute,
-} = useAsyncData(
+const { data, status, error, execute } = useAsyncData(
   () => {
     const formData = new FormData()
     formData.append("type", model.value.type)
@@ -89,6 +84,6 @@ async function onSubmit() {
     <NText v-if="error" type="error">
       {{ error?.data?.message || "未知錯誤" }}
     </NText>
-    <CopyBox :value="url" :href="url" />
+    <CopyBox :value="data?.url" :href="data?.url" />
   </NCard>
 </template>
