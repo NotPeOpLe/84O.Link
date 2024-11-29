@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { type FormRules, type FormInst, NFormItem } from "naive-ui"
 
+const linkStorage = useLinkStorage()
+
 const { data, status, error, execute } = useAsyncData(
   () => {
     const formData = new FormData()
@@ -14,6 +16,13 @@ const { data, status, error, execute } = useAsyncData(
     server: false,
   }
 )
+
+watch(data, async (value, oldValue) => {
+  // 判斷是否為新資料
+  if (value?.url && value.url !== oldValue?.url) {
+    await linkStorage.insertLink(value)
+  }
+})
 
 const formRef = ref<FormInst>()
 

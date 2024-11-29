@@ -54,6 +54,7 @@ export default defineNuxtConfig({
         quotes: "double",
         semi: false,
         commaDangle: "only-multiline",
+        arrowParens: true,
       },
     },
   },

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { NCheckbox, type UploadFileInfo } from "naive-ui"
 
+const linkStorage = useLinkStorage()
+
 const {
   data,
   execute: upload,
@@ -26,6 +28,13 @@ const {
     server: false,
   }
 )
+
+watch(data, async (value, oldValue) => {
+  // 判斷是否為新資料
+  if (value?.url && value.url !== oldValue?.url) {
+    await linkStorage.insertLink(value)
+  }
+})
 
 const file = ref<UploadFileInfo>()
 const disablePreview = ref(false)

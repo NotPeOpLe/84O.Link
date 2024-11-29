@@ -10,7 +10,7 @@ export default defineEventHandler(
     if (type === "url" && typeof input === "string") {
       const dbResult = await db
         .insert(tables.links)
-        .values({ key, type, target: input })
+        .values({ key, type, target: input, editKey })
         .returning({
           key: tables.links.key,
           type: tables.links.type,
