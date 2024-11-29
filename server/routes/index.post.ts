@@ -1,12 +1,5 @@
-import type { BlobObject } from "@nuxthub/core"
-
-type CreatedLink = {
-  url: string
-  data: Link & { file?: BlobObject }
-}
-
 export default defineEventHandler(
-  async (event): Promise<CreatedLink | undefined> => {
+  async (event): Promise<LinkObjectWithURL | undefined> => {
     const db = useDrizzle()
     const form = await readFormData(event)
     const type = form.get("type")
@@ -27,7 +20,7 @@ export default defineEventHandler(
 
       return {
         url: getRequestURL(event) + key,
-        data: dbResult[0],
+        ...dbResult[0],
       }
     }
 
@@ -59,10 +52,8 @@ export default defineEventHandler(
 
       return {
         url: getRequestURL(event) + key,
-        data: {
-          ...dbResult[0],
-          file,
-        },
+        file,
+        ...dbResult[0],
       }
     }
   }

@@ -7,7 +7,7 @@ const { data, status, error, execute } = useAsyncData(
     formData.append("type", model.value.type)
     formData.append("input", model.value.input)
     model.value.input = ""
-    return $fetch<string>("/", { method: "POST", body: formData })
+    return $fetch<LinkObjectWithURL>("/", { method: "POST", body: formData })
   },
   {
     immediate: false,

@@ -15,7 +15,10 @@ const {
     }
     formData.set("type", "file")
     formData.set("input", file.value.file)
-    const res = await $fetch<string>("/", { method: "POST", body: formData })
+    const res = await $fetch<LinkObjectWithURL>("/", {
+      method: "POST",
+      body: formData,
+    })
     return res
   },
   {
