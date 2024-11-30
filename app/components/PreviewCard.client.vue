@@ -2,7 +2,7 @@
 import type { BlobObject } from "@nuxthub/core"
 
 const props = defineProps<{
-  file: BlobObject & { uploadedAt: string }
+  file: BlobObject
 }>()
 
 const src = computed(
@@ -23,7 +23,7 @@ const size = computed(() => formatSize(props.file.size))
 <template>
   <NCard content-class="flex items-center justify-center">
     <div class="max-w-2xl">
-      <div v-if="file.customMetadata.disablePreview">
+      <div v-if="!file.customMetadata.disablePreview">
         <!-- images -->
         <NImage
           v-if="file.contentType?.startsWith('image')"
