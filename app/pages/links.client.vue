@@ -6,6 +6,8 @@ import {
   NTag,
   type DataTableColumns,
 } from "naive-ui"
+import { MyLinksLinkPreview, MyLinksFilePreview } from "#components"
+// import MylinksLinkPreview from "#components"
 
 const OFFSET = new Date(2024, 9, 10).getTime()
 const message = useMessage()
@@ -59,6 +61,16 @@ const columns: DataTableColumns<LinkObjectWithURL> = [
   {
     title: "導向目標",
     key: "target",
+    render: (row) => {
+      switch (row.type) {
+        case "url":
+          return <MyLinksLinkPreview link={row.target} />
+        case "file":
+          return <MyLinksFilePreview file={row.file} />
+        default:
+          return row.target
+      }
+    },
   },
   {
     title: "建立時間",
