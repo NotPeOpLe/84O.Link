@@ -7,3 +7,9 @@ export const formatSize = (size: number) => {
   }
   return `${size.toFixed(2)} ${units[index]}`
 }
+
+export function isBot() {
+  const userAgent = useRequestHeader("User-Agent")
+  if (!userAgent) return false
+  return userAgent.includes("compatible")
+}
