@@ -1,24 +1,28 @@
 <script setup lang="ts">
 import { type FormRules, type FormInst, NFormItem } from "naive-ui"
 
-const {
-  data: url,
-  status,
-  error,
-  execute,
-} = useAsyncData(
+const linkStorage = useLinkStorage()
+
+const { data, status, error, execute } = useAsyncData(
   () => {
     const formData = new FormData()
     formData.append("type", model.value.type)
-    formData.append("input", model.value.input)
+    formData.append("input", model.value.input.trim())
     model.value.input = ""
-    return $fetch<string>("/", { method: "POST", body: formData })
+    return $fetch<LinkObjectWithURL>("/", { method: "POST", body: formData })
   },
   {
     immediate: false,
     server: false,
   }
 )
+
+watch(data, async (value, oldValue) => {
+  // 判斷是否為新資料
+  if (value?.url && value.url !== oldValue?.url) {
+    await linkStorage.insertLink(value)
+  }
+})
 
 const formRef = ref<FormInst>()
 
@@ -89,6 +93,6 @@ async function onSubmit() {
     <NText v-if="error" type="error">
       {{ error?.data?.message || "未知錯誤" }}
     </NText>
-    <CopyBox :value="url" :href="url" />
+    <CopyBox :value="data?.url" :href="data?.url" />
   </NCard>
 </template>

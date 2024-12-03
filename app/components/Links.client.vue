@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const router = useRouter()
+</script>
+
 <template>
   <NFlex>
     <NButton
@@ -11,6 +15,9 @@
         <Icon name="tabler:brand-github" />
       </template>
       GitHub
+    </NButton>
+    <NButton size="small" @click="() => router.push({ name: 'links' })">
+      我的短網址
     </NButton>
   </NFlex>
 </template>

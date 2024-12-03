@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { NConfigProvider, useOsTheme, darkTheme } from "naive-ui"
+import {
+  NConfigProvider,
+  useOsTheme,
+  darkTheme,
+  NMessageProvider,
+  NModalProvider,
+} from "naive-ui"
 import hljs from "highlight.js/lib/core"
 
 const osThemeRef = useOsTheme()
@@ -8,11 +14,15 @@ const theme = computed(() => (osThemeRef.value === "dark" ? darkTheme : null))
 
 <template>
   <NConfigProvider :hljs="hljs" :theme="theme">
-    <NGlobalStyle />
-    <NuxtRouteAnnouncer />
-    <NuxtLoadingIndicator />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <NMessageProvider>
+      <NModalProvider>
+        <NGlobalStyle />
+        <NuxtRouteAnnouncer />
+        <NuxtLoadingIndicator />
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
+      </NModalProvider>
+    </NMessageProvider>
   </NConfigProvider>
 </template>

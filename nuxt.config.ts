@@ -4,7 +4,14 @@ import { NaiveUiResolver } from "unplugin-vue-components/resolvers"
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // https://nuxt.com/modules
-  modules: ["@nuxthub/core", "@nuxt/eslint", "nuxtjs-naive-ui", "@nuxtjs/tailwindcss", "@nuxt/icon"],
+  modules: [
+    "@nuxthub/core",
+    "@nuxt/eslint",
+    "nuxtjs-naive-ui",
+    "@nuxtjs/tailwindcss",
+    "@nuxt/icon",
+    "@vueuse/nuxt",
+  ],
 
   // https://devtools.nuxt.com
   devtools: { enabled: true },
@@ -46,6 +53,8 @@ export default defineNuxtConfig({
       stylistic: {
         quotes: "double",
         semi: false,
+        commaDangle: "only-multiline",
+        arrowParens: true,
       },
     },
   },
