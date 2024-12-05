@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { NCheckbox, type UploadFileInfo } from "naive-ui"
 
+const linkStorage = useLinkStorage()
+
 const {
-  data: url,
+  data,
   execute: upload,
   status,
   error,
@@ -15,7 +17,10 @@ const {
     }
     formData.set("type", "file")
     formData.set("input", file.value.file)
-    const res = await $fetch<string>("/", { method: "POST", body: formData })
+    const res = await $fetch<LinkObjectWithURL>("/", {
+      method: "POST",
+      body: formData,
+    })
     return res
   },
   {
@@ -23,6 +28,13 @@ const {
     server: false,
   }
 )
+
+watch(data, async (value, oldValue) => {
+  // 判斷是否為新資料
+  if (value?.url && value.url !== oldValue?.url) {
+    await linkStorage.insertLink(value)
+  }
+})
 
 const file = ref<UploadFileInfo>()
 const disablePreview = ref(false)
@@ -75,6 +87,6 @@ async function onSubmit() {
     <NText v-if="error" type="error">
       {{ error?.data?.message || "未知錯誤" }}
     </NText>
-    <CopyBox :value="url" :href="url" />
+    <CopyBox :value="data?.url" :href="data?.url" />
   </NCard>
 </template>
